@@ -53,3 +53,4 @@ export async function GET(req: NextRequest) {
 export async function HEAD(req: NextRequest) {
   return GET(req);
 }
+
