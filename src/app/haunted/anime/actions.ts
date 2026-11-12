@@ -24,8 +24,8 @@ export async function createAnime(formData: FormData) {
   });
 
   revalidatePath("/anime");
-  revalidatePath("/admin");
-  revalidatePath("/admin/anime");
+  revalidatePath("/haunted");
+  revalidatePath("/haunted/anime");
 }
 
 export async function updateAnimeStatus(id: string, status: string, rating?: number | null) {
@@ -38,8 +38,8 @@ export async function updateAnimeStatus(id: string, status: string, rating?: num
   });
 
   revalidatePath("/anime");
-  revalidatePath("/admin");
-  revalidatePath("/admin/anime");
+  revalidatePath("/haunted");
+  revalidatePath("/haunted/anime");
 }
 
 export async function updateAnime(id: string, formData: FormData) {
@@ -64,8 +64,8 @@ export async function updateAnime(id: string, formData: FormData) {
   });
 
   revalidatePath("/anime");
-  revalidatePath("/admin");
-  revalidatePath("/admin/anime");
+  revalidatePath("/haunted");
+  revalidatePath("/haunted/anime");
 }
 
 export async function deleteAnime(id: string) {
@@ -74,6 +74,6 @@ export async function deleteAnime(id: string) {
   });
 
   revalidatePath("/anime");
-  revalidatePath("/admin");
-  revalidatePath("/admin/anime");
+  revalidatePath("/haunted");
+  revalidatePath("/haunted/anime");
 }

@@ -6,10 +6,12 @@ import { SITE_NAME } from "@/lib/constants";
 import { ArrowLeft } from "lucide-react";
 
 export default async function PhotosPage() {
-  const profile = await prisma.profile.findFirst();
-  const photos = await prisma.photoAlbum.findMany({
-    orderBy: { sortOrder: "asc" },
-  });
+  const profile = await prisma.profile.findFirst().catch(() => null);
+  const photos = await prisma.photoAlbum
+    .findMany({
+      orderBy: { sortOrder: "asc" },
+    })
+    .catch(() => []);
 
   return (
     <main className="min-h-screen bg-background flex flex-col justify-between">

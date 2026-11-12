@@ -26,8 +26,8 @@ export async function createBook(formData: FormData) {
   });
 
   revalidatePath("/books");
-  revalidatePath("/admin");
-  revalidatePath("/admin/books");
+  revalidatePath("/haunted");
+  revalidatePath("/haunted/books");
 }
 
 export async function updateBook(id: string, formData: FormData) {
@@ -54,8 +54,8 @@ export async function updateBook(id: string, formData: FormData) {
   });
 
   revalidatePath("/books");
-  revalidatePath("/admin");
-  revalidatePath("/admin/books");
+  revalidatePath("/haunted");
+  revalidatePath("/haunted/books");
 }
 
 export async function deleteBook(id: string) {
@@ -64,6 +64,6 @@ export async function deleteBook(id: string) {
   });
 
   revalidatePath("/books");
-  revalidatePath("/admin");
-  revalidatePath("/admin/books");
+  revalidatePath("/haunted");
+  revalidatePath("/haunted/books");
 }

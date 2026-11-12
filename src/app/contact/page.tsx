@@ -7,7 +7,7 @@ import { SITE_NAME } from "@/lib/constants";
 import { ArrowLeft, Github, Linkedin, Mail, MapPin, MessageCircle, Facebook } from "lucide-react";
 
 export default async function ContactPage() {
-  const profile = await prisma.profile.findFirst();
+  const profile = await prisma.profile.findFirst().catch(() => null);
 
   return (
     <main className="min-h-screen bg-background flex flex-col justify-between">

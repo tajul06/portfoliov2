@@ -13,10 +13,12 @@ export default async function ArticlePage({
 }: {
   params: { slug: string };
 }) {
-  const profile = await prisma.profile.findFirst();
-  const article = await prisma.article.findUnique({
-    where: { slug: params.slug },
-  });
+  const profile = await prisma.profile.findFirst().catch(() => null);
+  const article = await prisma.article
+    .findUnique({
+      where: { slug: params.slug },
+    })
+    .catch(() => null);
 
   if (!article || !article.published) {
     notFound();

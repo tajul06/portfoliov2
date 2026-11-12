@@ -41,8 +41,8 @@ export async function createProject(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/projects");
-  revalidatePath("/admin");
-  revalidatePath("/admin/projects");
+  revalidatePath("/haunted");
+  revalidatePath("/haunted/projects");
 }
 
 export async function updateProject(id: string, formData: FormData) {
@@ -81,8 +81,8 @@ export async function updateProject(id: string, formData: FormData) {
   revalidatePath("/");
   revalidatePath("/projects");
   revalidatePath(`/projects/${id}`);
-  revalidatePath("/admin");
-  revalidatePath("/admin/projects");
+  revalidatePath("/haunted");
+  revalidatePath("/haunted/projects");
 }
 
 export async function deleteProject(id: string) {
@@ -92,6 +92,6 @@ export async function deleteProject(id: string) {
 
   revalidatePath("/");
   revalidatePath("/projects");
-  revalidatePath("/admin");
-  revalidatePath("/admin/projects");
+  revalidatePath("/haunted");
+  revalidatePath("/haunted/projects");
 }

@@ -7,11 +7,13 @@ import { SITE_NAME } from "@/lib/constants";
 import { ArrowLeft } from "lucide-react";
 
 export default async function NotebookPage() {
-  const profile = await prisma.profile.findFirst();
-  const articles = await prisma.article.findMany({
-    where: { published: true },
-    orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
-  });
+  const profile = await prisma.profile.findFirst().catch(() => null);
+  const articles = await prisma.article
+    .findMany({
+      where: { published: true },
+      orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+    })
+    .catch(() => []);
 
   return (
     <main className="min-h-screen bg-background flex flex-col justify-between">

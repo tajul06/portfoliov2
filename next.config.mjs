@@ -13,6 +13,20 @@ const nextConfig = {
       allowedOrigins: ['localhost:3000'],
     },
   },
+  async redirects() {
+    return [
+      {
+        source: '/admin/:path*',
+        destination: '/haunted/:path*',
+        permanent: false,
+      },
+      {
+        source: '/admin',
+        destination: '/haunted',
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

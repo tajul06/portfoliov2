@@ -18,31 +18,37 @@ interface ProjectPageProps {
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
-  const profile = await prisma.profile.findFirst();
+  const profile = await prisma.profile.findFirst().catch(() => null);
 
   // Try to find project by slug (slugified name), fallback to UUID lookup
-  let project = await prisma.project.findFirst({
-    where: {
-      OR: [
-        { name: { equals: params.slug, mode: 'insensitive' } },
-        { id: params.slug } // fallback to UUID for backward compatibility
-      ]
-    },
-  });
+  let project = await prisma.project
+    .findFirst({
+      where: {
+        OR: [
+          { name: { equals: params.slug, mode: "insensitive" } },
+          { id: params.slug }, // fallback to UUID for backward compatibility
+        ],
+      },
+    })
+    .catch(() => null);
 
   // If not found by slug, try exact name match
   if (!project) {
     // Convert slug back to name-like for searching
-    const allProjects = await prisma.project.findMany({
-      where: { visible: true },
-      select: { id: true, name: true }
-    });
+    const allProjects = await prisma.project
+      .findMany({
+        where: { visible: true },
+        select: { id: true, name: true },
+      })
+      .catch(() => []);
 
-    const matched = allProjects.find(p => slugify(p.name) === params.slug);
+    const matched = allProjects.find((p) => slugify(p.name) === params.slug);
     if (matched) {
-      project = await prisma.project.findUnique({
-        where: { id: matched.id },
-      });
+      project = await prisma.project
+        .findUnique({
+          where: { id: matched.id },
+        })
+        .catch(() => null);
     }
   }
 

@@ -7,37 +7,47 @@ import { Reveal } from "@/components/reveal";
 import { SITE_NAME } from "@/lib/constants";
 
 export default async function BeyondCodePage() {
-  const profile = await prisma.profile.findFirst();
-  const photos = await prisma.photoAlbum.findMany({
-    orderBy: { sortOrder: "asc" },
-    take: 12,
-  });
+  const profile = await prisma.profile.findFirst().catch(() => null);
+  const photos = await prisma.photoAlbum
+    .findMany({
+      orderBy: { sortOrder: "asc" },
+      take: 12,
+    })
+    .catch(() => []);
 
-  const articles = await prisma.article.findMany({
-    where: { published: true },
-    orderBy: { sortOrder: "asc" },
-    select: {
-      id: true,
-      title: true,
-      slug: true,
-      excerpt: true,
-      content: true,
-    },
-  });
+  const articles = await prisma.article
+    .findMany({
+      where: { published: true },
+      orderBy: { sortOrder: "asc" },
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        excerpt: true,
+        content: true,
+      },
+    })
+    .catch(() => []);
 
-  const books = await prisma.book.findMany({
-    orderBy: { sortOrder: "asc" },
-    take: 8,
-  });
+  const books = await prisma.book
+    .findMany({
+      orderBy: { sortOrder: "asc" },
+      take: 8,
+    })
+    .catch(() => []);
 
-  const anime = await prisma.anime.findMany({
-    orderBy: { sortOrder: "asc" },
-    take: 8,
-  });
+  const anime = await prisma.anime
+    .findMany({
+      orderBy: { sortOrder: "asc" },
+      take: 8,
+    })
+    .catch(() => []);
 
-  const hobbies = await prisma.hobby.findMany({
-    orderBy: { sortOrder: "asc" },
-  });
+  const hobbies = await prisma.hobby
+    .findMany({
+      orderBy: { sortOrder: "asc" },
+    })
+    .catch(() => []);
 
   return (
     <main className="min-h-screen bg-background flex flex-col justify-between">

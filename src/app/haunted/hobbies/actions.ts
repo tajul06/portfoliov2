@@ -19,8 +19,8 @@ export async function createHobby(formData: FormData) {
   });
 
   revalidatePath("/hobbies");
-  revalidatePath("/admin");
-  revalidatePath("/admin/hobbies");
+  revalidatePath("/haunted");
+  revalidatePath("/haunted/hobbies");
 }
 
 export async function updateHobby(id: string, formData: FormData) {
@@ -40,13 +40,13 @@ export async function updateHobby(id: string, formData: FormData) {
   });
 
   revalidatePath("/hobbies");
-  revalidatePath("/admin");
-  revalidatePath("/admin/hobbies");
+  revalidatePath("/haunted");
+  revalidatePath("/haunted/hobbies");
 }
 
 export async function deleteHobby(id: string) {
   await prisma.hobby.delete({ where: { id } });
   revalidatePath("/hobbies");
-  revalidatePath("/admin");
-  revalidatePath("/admin/hobbies");
+  revalidatePath("/haunted");
+  revalidatePath("/haunted/hobbies");
 }

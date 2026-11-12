@@ -7,10 +7,12 @@ import { SITE_NAME } from "@/lib/constants";
 import { ArrowLeft } from "lucide-react";
 
 export default async function BooksPage() {
-  const profile = await prisma.profile.findFirst();
-  const books = await prisma.book.findMany({
-    orderBy: [{ status: "asc" }, { sortOrder: "asc" }],
-  });
+  const profile = await prisma.profile.findFirst().catch(() => null);
+  const books = await prisma.book
+    .findMany({
+      orderBy: [{ status: "asc" }, { sortOrder: "asc" }],
+    })
+    .catch(() => []);
 
   const read = books.filter((b) => b.status === "Read");
   const reading = books.filter((b) => b.status === "Reading");

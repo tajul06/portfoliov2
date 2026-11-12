@@ -7,13 +7,23 @@ import { SITE_NAME } from "@/lib/constants";
 import { ArrowLeft } from "lucide-react";
 
 export default async function SkillsPage() {
-  const profile = await prisma.profile.findFirst();
-  const skills = await prisma.skill.findMany({
-    orderBy: [{ group: "asc" }, { sortOrder: "asc" }],
-  });
+  const profile = await prisma.profile.findFirst().catch(() => null);
+  const skills = await prisma.skill
+    .findMany({
+      orderBy: [{ group: "asc" }, { sortOrder: "asc" }],
+    })
+    .catch(() => []);
 
-  const grouped: Record<string, typeof skills> = {};
-  skills.forEach((s) => {
+  type SkillItem = {
+    id: string;
+    name: string;
+    group: string;
+    sortOrder: number;
+    createdAt?: Date;
+  };
+
+  const grouped: Record<string, SkillItem[]> = {};
+  skills.forEach((s: SkillItem) => {
     if (!grouped[s.group]) grouped[s.group] = [];
     grouped[s.group].push(s);
   });

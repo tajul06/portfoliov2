@@ -7,10 +7,12 @@ import { SITE_NAME } from "@/lib/constants";
 import { ArrowLeft } from "lucide-react";
 
 export default async function AnimePage() {
-  const profile = await prisma.profile.findFirst();
-  const animeList = await prisma.anime.findMany({
-    orderBy: [{ status: "asc" }, { sortOrder: "asc" }],
-  });
+  const profile = await prisma.profile.findFirst().catch(() => null);
+  const animeList = await prisma.anime
+    .findMany({
+      orderBy: [{ status: "asc" }, { sortOrder: "asc" }],
+    })
+    .catch(() => []);
 
   const completed = animeList.filter((a) => a.status === "Completed");
   const watching = animeList.filter((a) => a.status === "Watching");

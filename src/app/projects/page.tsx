@@ -6,11 +6,13 @@ import { ProjectsGrid } from "./projects-grid";
 import { SITE_NAME } from "@/lib/constants";
 
 export default async function ProjectsPage() {
-  const profile = await prisma.profile.findFirst();
-  const projects = await prisma.project.findMany({
-    where: { visible: true },
-    orderBy: { sortOrder: "asc" },
-  });
+  const profile = await prisma.profile.findFirst().catch(() => null);
+  const projects = await prisma.project
+    .findMany({
+      where: { visible: true },
+      orderBy: { sortOrder: "asc" },
+    })
+    .catch(() => []);
 
   return (
     <main className="min-h-screen bg-background flex flex-col justify-between">

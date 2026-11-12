@@ -7,10 +7,12 @@ import { SITE_NAME } from "@/lib/constants";
 import { ArrowLeft } from "lucide-react";
 
 export default async function HobbiesPage() {
-  const profile = await prisma.profile.findFirst();
-  const hobbies = await prisma.hobby.findMany({
-    orderBy: { sortOrder: "asc" },
-  });
+  const profile = await prisma.profile.findFirst().catch(() => null);
+  const hobbies = await prisma.hobby
+    .findMany({
+      orderBy: { sortOrder: "asc" },
+    })
+    .catch(() => []);
 
   return (
     <main className="min-h-screen bg-background flex flex-col justify-between">
