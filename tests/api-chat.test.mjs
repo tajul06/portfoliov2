@@ -98,5 +98,15 @@ describe("Public Route Health & Status", () => {
     const res = await getUrl("/mascots/ip-2016.bexode");
     assert.equal(res.status, 200);
   });
+
+  test("GET /api/keep-alive returns 200 with status alive and database heartbeat", async () => {
+    const res = await getUrl("/api/keep-alive");
+    assert.equal(res.status, 200);
+    assert.equal(res.headers["x-keep-alive"], "healthy");
+    const json = JSON.parse(res.body);
+    assert.equal(json.status, "alive");
+    assert.ok(json.timestamp);
+    assert.ok(json.database);
+  });
 });
 

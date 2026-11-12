@@ -1,0 +1,36 @@
+name: Keep-Alive Cron
+
+on:
+  schedule:
+    # Runs every 14 minutes to prevent Supabase PostgreSQL and server containers from sleeping
+    - cron: '*/14 * * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions dashboard
+
+jobs:
+  ping:
+    name: Ping /api/keep-alive
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send keep-alive HTTP heartbeat
+        run: |
+          TARGET="${{ secrets.APP_URL || 'https://tajulislam.dev' }}/api/keep-alive"
+          echo "Sending keep-alive ping to: $TARGET"
+          
+          if [ -n "${{ secrets.CRON_SECRET }}" ]; then
+            AUTH_HEADER="Authorization: Bearer ${{ secrets.CRON_SECRET }}"
+          else
+            AUTH_HEADER="X-Cron-Source: github-actions"
+          fi
+
+          RESPONSE=$(curl -s -w "\n%{http_code}" -H "$AUTH_HEADER" "$TARGET")
+          HTTP_STATUS=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+
+          echo "Response Status: $HTTP_STATUS"
+          echo "Response Body: $BODY"
+
+          if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 400 ]; then
+            echo "Keep-alive ping succeeded!"
+          else
+            echo "Notice: Endpoint returned status $HTTP_STATUS"
+          fi
