@@ -73,7 +73,7 @@ desktop.ini
 *.sw?
 
 # ==========================================
-# Agent & Tool Metadata / Cache
+# Agent, LLM & Tool Framework Files
 # (Not required to build or run the website)
 # ==========================================
 .agent/
@@ -88,11 +88,27 @@ scratch/
 skills-lock.json
 
 # ==========================================
-# Local Browser Dumps & Temporary Drafts
+# Internal Documentation & Agent Specs
+# (Not required to build or run the website)
+# ==========================================
+/docs/
+/scripts/
+CLAUDE.md
+DATABASE_IMPLEMENTATION.md
+GSD-STYLE.md
+PROJECT_RULES.md
+Personal Portfolio Website Software Requirements Specification.md
+VERSION
+model_capabilities.yaml
+portfolio.md
+*.md
+!README.md
+
+# ==========================================
+# Temporary Browser Dumps & Local Drafts
 # ==========================================
 Md Tajul Islam _ Portfolio_files/
 Md Tajul Islam _ Portfolio.html
 New folder/
 *.tmp
 *.temp
-
