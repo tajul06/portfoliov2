@@ -99,3 +99,4 @@ describe("Public Route Health & Status", () => {
     assert.equal(res.status, 200);
   });
 });
+

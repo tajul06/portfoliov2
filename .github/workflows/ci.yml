@@ -49,3 +49,4 @@ jobs:
 
       - name: Build Production Application
         run: npm run build
+

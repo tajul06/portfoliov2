@@ -39,3 +39,4 @@ describe("Configuration & Security Files Verification", () => {
     assert.ok(gitignore.includes("node_modules/"), ".gitignore must exclude node_modules/");
   });
 });
+

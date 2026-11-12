@@ -238,31 +238,58 @@ export default function AIChatAssistant() {
 
   return (
     <>
-      {/* Floating Launcher Button */}
+      {/* Floating Mascot Launcher (The Mascot itself is the button) */}
       <AnimatePresence>
         {!isOpen && (
-          <motion.button
-            ref={openButtonRef}
-            onClick={() => setIsOpen(true)}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            whileHover={{ scale: 1.05 }}
+          <motion.div
+            ref={openButtonRef as any}
+            onClick={() => {
+              playDuck("wave");
+              setIsOpen(true);
+            }}
+            onMouseEnter={() => {
+              playDuck("wave");
+            }}
+            initial={{ opacity: 0, scale: 0.7, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.7, y: 20 }}
+            whileHover={{ scale: 1.08, y: -4 }}
             whileTap={{ scale: 0.95 }}
-            className="fixed bottom-4 right-4 z-50 sm:bottom-6 sm:right-6 flex items-center gap-2.5 px-4 sm:px-5 py-3 rounded-full bg-primary text-primary-foreground shadow-2xl transition-all duration-200 border border-border/80 hover:border-accent/40 group cursor-pointer"
+            transition={{ type: "spring", stiffness: 350, damping: 25 }}
+            className="fixed bottom-3 right-3 sm:bottom-5 sm:right-5 z-50 flex flex-col items-center cursor-pointer select-none group"
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setIsOpen(true);
+              }
+            }}
             aria-label="Open AI Duck Assistant"
           >
-            <span className="text-xl select-none group-hover:rotate-12 transition-transform duration-200">
-              🦆
-            </span>
-            <div className="flex flex-col text-left">
-              <span className="text-sm font-semibold tracking-tight leading-none">Ask AI</span>
-              <span className="text-[10px] text-muted-foreground group-hover:text-accent transition-colors">
-                Waddle Mascot
-              </span>
+            {/* Interactive Speech Bubble Prompt */}
+            <div className="mb-1 whitespace-nowrap px-3 py-1 rounded-full bg-card/95 border border-border text-[11px] font-semibold text-foreground shadow-lg flex items-center gap-1.5 transition-all duration-200 group-hover:border-accent/50 group-hover:shadow-accent/20">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Ask Waddle</span>
+              <Sparkles className="w-3 h-3 text-accent animate-pulse" />
             </div>
-            <Sparkles className="w-3.5 h-3.5 text-accent animate-pulse" />
-          </motion.button>
+
+            {/* Living Mascot Character */}
+            <div className="relative">
+              <exode-mascot
+                id="floating-duck-mascot"
+                mascot={selectedMascot}
+                src={`/mascots/${selectedMascot}.bexode`}
+                base="/mascots/"
+                colors="#ffd23f,#ff8a00,#fff7e0"
+                mood="95"
+                follow="true"
+                style={{ width: "92px", height: "92px", display: "inline-block" }}
+              />
+              {/* Soft ground shadow under duck feet */}
+              <div className="w-16 h-2.5 rounded-[100%] bg-foreground/15 dark:bg-black/50 blur-[2px] mx-auto -mt-2 transition-transform duration-200 group-hover:scale-90 group-hover:opacity-60" />
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
 
