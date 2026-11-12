@@ -20,8 +20,30 @@ export function VideoPlayer({ url, title }: VideoPlayerProps) {
     return match ? match[1] : null;
   };
 
+  // Extract video ID for Google Drive
+  const getGoogleDriveId = (url: string) => {
+    const regExp = /(?:drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?id=))([a-zA-Z0-9_-]+)/;
+    const match = url.match(regExp);
+    return match ? match[1] : null;
+  };
+
   const youtubeId = getYouTubeId(url);
   const vimeoId = getVimeoId(url);
+  const driveId = getGoogleDriveId(url);
+
+  if (driveId) {
+    return (
+      <div className="relative w-full pt-[56.25%] border-2 border-primary bg-muted rounded-xl overflow-hidden">
+        <iframe
+          className="absolute top-0 left-0 w-full h-full"
+          src={`https://drive.google.com/file/d/${driveId}/preview`}
+          title={title || "Google Drive Demo Video"}
+          allow="autoplay; fullscreen"
+          allowFullScreen
+        />
+      </div>
+    );
+  }
 
   if (youtubeId) {
     return (
