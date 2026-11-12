@@ -1,0 +1,302 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Light Mode (Clean, Warm Editorial Light Style) */
+  :root {
+    --background: 240 5% 97%; /* Soft gallery pearl */
+    --foreground: 240 10% 7%; /* Deep obsidian text */
+
+    --card: 0 0% 100%; /* Pure white cards */
+    --card-foreground: 240 10% 7%;
+
+    --primary: 240 10% 7%; /* Jet black buttons */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 5% 92%; /* Light ash gray */
+    --secondary-foreground: 240 10% 7%;
+
+    --accent: 20 92% 50%; /* Warm vivid orange-red from reference */
+    --accent-foreground: 0 0% 100%;
+    --accent-glow: 20 92% 62%;
+
+    --muted: 240 5% 91%;
+    --muted-foreground: 240 5% 44%;
+
+    --border: 240 6% 87%;
+    --ring: 20 92% 50%;
+    --ring-accent: 20 92% 50%;
+
+    --radius: 1rem;
+
+    /* Accents */
+    --violet: 265 83% 62%;
+    --violet-foreground: 0 0% 100%;
+    --emerald: 158 64% 45%;
+    --emerald-foreground: 0 0% 100%;
+    --amber: 38 92% 50%;
+    --amber-foreground: 0 0% 100%;
+    --rose: 20 92% 52%;
+    --rose-foreground: 0 0% 100%;
+    --cyan: 195 89% 55%;
+    --cyan-foreground: 0 0% 100%;
+  }
+
+  /* Dark Mode (Emadalmagedy Reference - Deep Charcoal & Warm Glow) */
+  .dark {
+    --background: 240 10% 5%; /* Rich deep charcoal #0c0c10 */
+    --foreground: 0 0% 98%; /* Crisp titanium white */
+
+    --card: 240 8% 8%; /* Dark graphite card surface #131318 */
+    --card-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%; /* Crisp white primary buttons */
+    --primary-foreground: 240 10% 6%; /* Black text on primary */
+
+    --secondary: 240 6% 12%; /* Muted slate gray */
+    --secondary-foreground: 0 0% 95%;
+
+    --accent: 20 94% 53%; /* Vivid warm orange-red from reference collar */
+    --accent-foreground: 0 0% 100%;
+    --accent-glow: 20 94% 65%;
+
+    --muted: 240 6% 11%;
+    --muted-foreground: 240 5% 65%; /* Soft silver gray */
+
+    --border: 240 6% 16%; /* Fine subtle dark borders */
+    --ring: 20 94% 53%;
+    --ring-accent: 20 94% 53%;
+
+    --radius: 1rem;
+
+    /* Dark Mode Accents */
+    --violet: 265 83% 68%;
+    --violet-foreground: 0 0% 100%;
+    --emerald: 158 64% 50%;
+    --emerald-foreground: 0 0% 100%;
+    --amber: 38 92% 54%;
+    --amber-foreground: 0 0% 100%;
+    --rose: 20 94% 55%;
+    --rose-foreground: 0 0% 100%;
+    --cyan: 195 89% 60%;
+    --cyan-foreground: 0 0% 100%;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+    CMS / ADMIN THEME PALETTES (Gentle on the eyes, 100% visible)
+───────────────────────────────────────────────────────────── */
+.admin-theme {
+  --background: 240 5% 96.5%;
+  --foreground: 240 10% 12%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 12%;
+  --primary: 240 10% 12%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 240 5% 91%;
+  --secondary-foreground: 240 10% 12%;
+  --accent: 20 92% 50%;
+  --accent-foreground: 0 0% 100%;
+  --muted: 240 5% 91%;
+  --muted-foreground: 240 5% 45%;
+  --border: 240 6% 87%;
+  --ring: 20 92% 50%;
+  --radius: 0.75rem;
+  font-family: var(--font-body), 'Plus Jakarta Sans', system-ui, sans-serif !important;
+}
+
+.dark .admin-theme {
+  --background: 240 10% 6.5%;
+  --foreground: 0 0% 95%;
+  --card: 240 8% 10%;
+  --card-foreground: 0 0% 95%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 240 10% 6.5%;
+  --secondary: 240 6% 14%;
+  --secondary-foreground: 0 0% 95%;
+  --accent: 20 94% 53%;
+  --accent-foreground: 0 0% 100%;
+  --muted: 240 6% 14%;
+  --muted-foreground: 240 5% 65%;
+  --border: 240 6% 20%;
+  --ring: 20 94% 53%;
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+    letter-spacing: -0.025em;
+  }
+
+  /* Monumental modern headline (I'M A WEB DESIGNER style) */
+  .hero-headline {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-size: clamp(2.5rem, 6.5vw, 5.25rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+  }
+
+  /* Pill-shaped tags */
+  .pill {
+    @apply inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-medium bg-secondary text-secondary-foreground border border-border/70 transition-colors;
+  }
+
+  /* Rounded buttons */
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-full bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-all duration-200;
+  }
+
+  .btn-accent {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-full bg-accent text-accent-foreground font-semibold text-sm hover:opacity-95 transition-all duration-200 shadow-md;
+  }
+  .btn-accent:hover {
+    box-shadow: 0 0 24px hsl(var(--accent) / 0.45);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-full bg-secondary text-secondary-foreground border border-border font-medium text-sm hover:border-accent/60 hover:text-accent transition-all duration-200;
+  }
+
+  /* High-contrast focus states */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring-accent));
+    outline-offset: 2px;
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 2px solid hsl(var(--ring-accent));
+    outline-offset: 2px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+    CMS / ADMIN FORM CONTROLS & CARDS (Zero eye strain, 100% visible text)
+───────────────────────────────────────────────────────────── */
+.admin-theme h1,
+.admin-theme h2,
+.admin-theme h3,
+.admin-theme h4,
+.admin-theme h5,
+.admin-theme h6 {
+  font-family: var(--font-body), 'Plus Jakarta Sans', system-ui, sans-serif !important;
+  letter-spacing: -0.015em !important;
+  text-transform: none !important;
+}
+
+.admin-theme input:not([type="checkbox"]):not([type="radio"]),
+.admin-theme textarea,
+.admin-theme select {
+  color: hsl(var(--foreground)) !important;
+  background-color: hsl(var(--card)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  border-radius: 0.625rem !important;
+  padding: 0.625rem 0.875rem !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+  font-family: var(--font-body), 'Plus Jakarta Sans', system-ui, sans-serif !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.admin-theme input:focus,
+.admin-theme textarea:focus,
+.admin-theme select:focus {
+  outline: none !important;
+  border-color: hsl(var(--accent)) !important;
+  box-shadow: 0 0 0 3px hsl(var(--accent) / 0.22) !important;
+}
+
+.admin-theme input::placeholder,
+.admin-theme textarea::placeholder {
+  color: hsl(var(--muted-foreground) / 0.65) !important;
+}
+
+.admin-theme .border-2 {
+  border-width: 1px !important;
+  border-color: hsl(var(--border)) !important;
+  border-radius: 0.875rem !important;
+}
+
+.admin-theme .bg-card {
+  border-radius: 0.875rem !important;
+  border: 1px solid hsl(var(--border)) !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+.admin-theme button,
+.admin-theme .btn-primary {
+  border-radius: 0.625rem !important;
+  font-family: var(--font-body), 'Plus Jakarta Sans', system-ui, sans-serif !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+    ATMOSPHERIC SMOKY WATERCOLOR & INK SPLATTER TEXTURES
+───────────────────────────────────────────────────────────── */
+.smoke-ink-backdrop {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  background: radial-gradient(circle at 45% 45%, hsl(var(--foreground) / 0.14) 0%, hsl(var(--foreground) / 0.05) 50%, transparent 75%);
+  filter: blur(50px);
+}
+
+.smoke-cloud-layer {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.45;
+  background-image: 
+    radial-gradient(circle at 30% 20%, hsl(var(--foreground) / 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 75% 40%, hsl(var(--foreground) / 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 50% 70%, hsl(var(--accent) / 0.1) 0%, transparent 45%);
+}
+
+/* Card hover glow */
+.glow-card {
+  position: relative;
+  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+}
+.glow-card:hover {
+  box-shadow: 0 16px 36px -12px hsl(var(--accent) / 0.25);
+  border-color: hsl(var(--accent) / 0.45);
+  transform: translateY(-3px);
+}
+
+/* Status live pill */
+.status-live {
+  @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-accent/10 text-accent border border-accent/30;
+}
+.status-live::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: hsl(var(--accent));
+  box-shadow: 0 0 0 0 hsl(var(--accent) / 0.6);
+  animation: pingSoft 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes pingSoft {
+  0% { transform: scale(1); opacity: 0.8; }
+  75%, 100% { transform: scale(2.2); opacity: 0; }
+}

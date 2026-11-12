@@ -1,0 +1,138 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Profile {
+  id          String   @id @default(uuid())
+  name        String
+  headline    String
+  bio         String   @db.Text
+  photoUrl    String?
+  email       String
+  githubUrl   String?
+  linkedinUrl String?
+  discordUrl  String?
+  facebookUrl String?
+  resumeUrl   String?
+  location    String?
+  phone       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Experience {
+  id        String    @id @default(uuid())
+  role      String
+  company   String
+  startDate DateTime?
+  endDate   DateTime?
+  bullets   String[]
+  sortOrder Int       @default(0)
+  visible   Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  name        String
+  description String   @db.Text
+  architecture String? @db.Text
+  overview    String?  @db.Text
+  challenges  String?  @db.Text
+  link        String?
+  repoUrl     String?
+  tags        String[]
+  imageUrl    String?
+  videoUrl    String?  @db.Text
+  sortOrder   Int      @default(0)
+  visible     Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Skill {
+  id        String   @id @default(uuid())
+  name      String
+  group     String
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model Education {
+  id          String    @id @default(uuid())
+  institution String
+  degree      String
+  startDate   DateTime?
+  endDate     DateTime?
+  details     String?   @db.Text
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+}
+
+model Hobby {
+  id        String   @id @default(uuid())
+  name      String
+  icon      String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model Anime {
+  id        String   @id @default(uuid())
+  title     String
+  status    String   @default("Plan to Watch")
+  rating    Int?
+  coverUrl  String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model Book {
+  id        String   @id @default(uuid())
+  title     String
+  author    String
+  status    String   @default("Want to Read")
+  rating    Int?
+  coverUrl  String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model SavedCV {
+  id        String   @id @default(uuid())
+  jobTitle  String
+  company   String
+  jdText    String   @db.Text
+  cvJson    Json
+  createdAt DateTime @default(now())
+}
+
+model PhotoAlbum {
+  id          String   @id @default(uuid())
+  title       String
+  description String?  @db.Text
+  imageUrl    String
+  caption     String?
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Article {
+  id        String   @id @default(uuid())
+  title     String
+  slug      String   @unique
+  content   String   @db.Text
+  excerpt   String?
+  published Boolean  @default(true)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
