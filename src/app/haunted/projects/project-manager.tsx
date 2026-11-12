@@ -45,7 +45,9 @@ export function ProjectManager({ initialProjects }: { initialProjects: Project[]
           <button
             onClick={() => {
               setIsAdding(true);
+              setEditingProject(null);
               setPreviewVideoUrl("");
+              setPreviewImageUrl("");
             }}
             className="px-5 py-2.5 bg-primary text-primary-foreground font-medium hover:bg-primary/90 text-sm"
           >
@@ -163,13 +165,24 @@ export function ProjectManager({ initialProjects }: { initialProjects: Project[]
 
             <div className="grid gap-4 md:grid-cols-3">
               <div>
-                <label className="block text-sm font-medium mb-1">
-                  Demo Picture / Image URL
-                </label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-sm font-medium">
+                    Demo Picture / Image URL
+                  </label>
+                  {previewImageUrl && (
+                    <button
+                      type="button"
+                      onClick={() => setPreviewImageUrl("")}
+                      className="text-xs text-red-500 hover:text-red-700 font-mono hover:underline"
+                    >
+                      ✕ Remove Image
+                    </button>
+                  )}
+                </div>
                 <input
                   name="imageUrl"
                   type="url"
-                  value={previewImageUrl !== "" ? previewImageUrl : editingProject?.imageUrl || ""}
+                  value={previewImageUrl}
                   onChange={(e) => setPreviewImageUrl(e.target.value)}
                   placeholder="https://... or /assets/..."
                   className="w-full px-3 py-2 border border-border bg-background focus:border-primary outline-none"
@@ -177,15 +190,26 @@ export function ProjectManager({ initialProjects }: { initialProjects: Project[]
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1">
-                  Demo Video URL
-                </label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-sm font-medium">
+                    Demo Video URL
+                  </label>
+                  {previewVideoUrl && (
+                    <button
+                      type="button"
+                      onClick={() => setPreviewVideoUrl("")}
+                      className="text-xs text-red-500 hover:text-red-700 font-mono hover:underline"
+                    >
+                      ✕ Remove Video
+                    </button>
+                  )}
+                </div>
                 <input
                   name="videoUrl"
                   type="url"
-                  value={previewVideoUrl !== "" ? previewVideoUrl : editingProject?.videoUrl || ""}
+                  value={previewVideoUrl}
                   onChange={(e) => setPreviewVideoUrl(e.target.value)}
-                  placeholder="https://www.youtube.com/watch?v=..."
+                  placeholder="YouTube, Vimeo, or Google Drive link..."
                   className="w-full px-3 py-2 border border-border bg-background focus:border-primary outline-none"
                 />
               </div>
@@ -203,14 +227,23 @@ export function ProjectManager({ initialProjects }: { initialProjects: Project[]
 
             {/* Media Previews */}
             <div className="grid gap-4 md:grid-cols-2">
-              {(previewImageUrl || editingProject?.imageUrl) && (
+              {Boolean(previewImageUrl) && (
                 <div className="border border-border p-3 bg-muted/30">
-                  <p className="text-xs font-semibold uppercase tracking-wider mb-2 text-muted-foreground">
-                    Image Preview:
-                  </p>
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                      Image Preview:
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setPreviewImageUrl("")}
+                      className="text-xs text-red-500 hover:text-red-700 font-mono hover:underline"
+                    >
+                      ✕ Remove
+                    </button>
+                  </div>
                   <div className="max-w-md aspect-video overflow-hidden border border-border bg-background">
                     <img
-                      src={previewImageUrl || editingProject?.imageUrl || ""}
+                      src={previewImageUrl}
                       alt="Demo Preview"
                       className="w-full h-full object-cover"
                       onError={(e) => {
@@ -221,13 +254,22 @@ export function ProjectManager({ initialProjects }: { initialProjects: Project[]
                 </div>
               )}
 
-              {(previewVideoUrl || editingProject?.videoUrl) && (
+              {Boolean(previewVideoUrl) && (
                 <div className="border border-border p-3 bg-muted/30">
-                  <p className="text-xs font-semibold uppercase tracking-wider mb-2 text-muted-foreground">
-                    Video Preview:
-                  </p>
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                      Video Preview:
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setPreviewVideoUrl("")}
+                      className="text-xs text-red-500 hover:text-red-700 font-mono hover:underline"
+                    >
+                      ✕ Remove
+                    </button>
+                  </div>
                   <div className="max-w-md">
-                    <VideoPlayer url={previewVideoUrl || editingProject?.videoUrl || ""} />
+                    <VideoPlayer url={previewVideoUrl} />
                   </div>
                 </div>
               )}

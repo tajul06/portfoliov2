@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { createBook, updateBook, deleteBook } from "./actions";
 
 export interface Book {
@@ -18,6 +19,14 @@ export function BooksClient({ initialBooks }: { initialBooks: Book[] }) {
   const [editingBook, setEditingBook] = useState<Book | null>(null);
   const [isAdding, setIsAdding] = useState(false);
   const [isPending, setIsPending] = useState(false);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams?.get("new") === "true") {
+      setIsAdding(true);
+      setEditingBook(null);
+    }
+  }, [searchParams]);
 
   const resetForm = () => {
     setEditingBook(null);
@@ -26,19 +35,41 @@ export function BooksClient({ initialBooks }: { initialBooks: Book[] }) {
 
   return (
     <div className="max-w-4xl">
-      <div className="mb-8 pb-4 border-b border-border">
-        <h1 className="text-3xl font-heading font-bold mb-1">Books & Reading List</h1>
-        <p className="text-muted-foreground text-sm">
-          Manage technical and non-technical books you recommend or are reading.
-        </p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-border">
+        <div>
+          <h1 className="text-3xl font-heading font-bold mb-1">Books & Reading List</h1>
+          <p className="text-muted-foreground text-sm">
+            Manage technical and non-technical books you recommend or are reading.
+          </p>
+        </div>
+        {!isAdding && !editingBook && (
+          <button
+            onClick={() => {
+              setIsAdding(true);
+              setEditingBook(null);
+            }}
+            className="px-5 py-2.5 bg-primary text-primary-foreground font-medium hover:bg-primary/90 text-sm self-start sm:self-auto shrink-0"
+          >
+            + Add Book
+          </button>
+        )}
       </div>
 
       {/* Add / Edit Book Form */}
       {(isAdding || editingBook) && (
-        <div className="border-2 border-primary p-6 bg-card mb-8">
-          <h2 className="text-lg font-heading font-bold mb-4">
-            {editingBook ? `Edit: ${editingBook.title}` : "+ Add Book"}
-          </h2>
+        <div className="border-2 border-primary p-6 bg-card mb-8 shadow-sm">
+          <div className="flex justify-between items-center mb-4 border-b border-border pb-2">
+            <h2 className="text-lg font-heading font-bold">
+              {editingBook ? `Edit: ${editingBook.title}` : "+ Add New Book"}
+            </h2>
+            <button
+              type="button"
+              onClick={resetForm}
+              className="text-xs text-muted-foreground hover:text-foreground"
+            >
+              ✕ Close
+            </button>
+          </div>
           <form
             onSubmit={async (e) => {
               e.preventDefault();
@@ -47,30 +78,11 @@ export function BooksClient({ initialBooks }: { initialBooks: Book[] }) {
               try {
                 if (editingBook) {
                   await updateBook(editingBook.id, formData);
-                  setBooks((prev) =>
-                    prev.map((b) =>
-                      b.id === editingBook.id
-                        ? {
-                            ...b,
-                            title: (formData.get("title") as string) || b.title,
-                            author: (formData.get("author") as string) || b.author,
-                            status: (formData.get("status") as string) || b.status || 'Read',
-                            rating: formData.get("rating")
-                              ? parseInt(formData.get("rating") as string, 10)
-                              : b.rating,
-                            coverUrl: (formData.get("coverUrl") as string) || b.coverUrl,
-                            sortOrder: parseInt(
-                              (formData.get("sortOrder") as string) || "0",
-                              10
-                            ),
-                          }
-                        : b
-                    )
-                  );
                 } else {
                   await createBook(formData);
                 }
                 resetForm();
+                window.location.reload();
               } catch (err: any) {
                 alert(err?.message || "Failed to save book");
               } finally {
@@ -173,7 +185,7 @@ export function BooksClient({ initialBooks }: { initialBooks: Book[] }) {
         <h2 className="text-lg font-heading font-bold">Current Books ({books.length})</h2>
         {books.length === 0 ? (
           <p className="text-muted-foreground py-6 text-center border border-dashed border-border">
-            No books in your list yet.
+            No books in your list yet. Click &quot;+ Add Book&quot; above to add one.
           </p>
         ) : (
           <div className="border border-border divide-y divide-border bg-card">
