@@ -159,7 +159,7 @@ export function ProjectManager({ initialProjects }: { initialProjects: Project[]
                   className="w-full px-3 py-2 border border-border bg-background focus:border-primary outline-none"
                 />
                 <p className="text-xs text-muted-foreground mt-1">
-                  Will embed directly on the project's public page.
+                  Will embed directly on the project&apos;s public page.
                 </p>
               </div>
 

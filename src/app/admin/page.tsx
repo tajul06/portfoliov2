@@ -82,7 +82,7 @@ export default async function AdminDashboard() {
           >
             <div className="font-heading font-bold mb-1">+ Add Anime</div>
             <div className="text-sm text-muted-foreground">
-              Track anime you've watched
+              Track anime you&apos;ve watched
             </div>
           </Link>
         </div>

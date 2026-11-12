@@ -27,6 +27,7 @@ export default function SecurityPage() {
 
   useEffect(() => {
     loadFactors();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const startEnrollment = async () => {

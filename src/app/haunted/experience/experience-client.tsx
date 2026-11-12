@@ -219,7 +219,7 @@ export function ExperienceManagerClient({
         <div className="space-y-3">
           {initialExperiences.length === 0 ? (
             <p className="text-sm text-muted-foreground py-4 border border-dashed border-border text-center">
-              No experience items added yet. Click "+ Add Experience" above to add one.
+              No experience items added yet. Click &quot;+ Add Experience&quot; above to add one.
             </p>
           ) : (
             initialExperiences.map((exp) => (
@@ -411,7 +411,7 @@ export function ExperienceManagerClient({
         <div className="space-y-3">
           {initialEducations.length === 0 ? (
             <p className="text-sm text-muted-foreground py-4 border border-dashed border-border text-center">
-              No education items added yet. Click "+ Add Education" above to add one.
+              No education items added yet. Click &quot;+ Add Education&quot; above to add one.
             </p>
           ) : (
             initialEducations.map((edu) => (
