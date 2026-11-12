@@ -220,3 +220,4 @@ export function NotebookClient({ initialArticles }: { initialArticles: Article[]
     </div>
   );
 }
+

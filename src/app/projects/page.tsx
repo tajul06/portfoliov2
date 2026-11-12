@@ -5,6 +5,8 @@ import { Reveal } from "@/components/reveal";
 import { ProjectsGrid } from "./projects-grid";
 import { SITE_NAME } from "@/lib/constants";
 
+export const revalidate = 0;
+
 export default async function ProjectsPage() {
   const profile = await prisma.profile.findFirst().catch(() => null);
   const projects = await prisma.project

@@ -64,6 +64,7 @@ interface AchievementItem {
 interface HomeClientProps {
   profile: Profile | null;
   projects: Project[];
+  totalProjectsCount?: number;
   skills: { id: string; name: string }[];
   techStack: string[];
   experiences?: Experience[];
@@ -94,6 +95,7 @@ const heroItemVariants = {
 export function HomeClient({
   profile,
   projects,
+  totalProjectsCount,
   skills,
   techStack,
   experiences = [],
@@ -260,7 +262,7 @@ export function HomeClient({
               href="/projects"
               className="text-sm font-semibold text-accent hover:underline inline-flex items-center gap-1 self-start sm:self-auto"
             >
-              <span>View All Projects ({projects.length})</span>
+              <span>View All Projects ({totalProjectsCount ?? projects.length})</span>
               <span>→</span>
             </Link>
           </div>
@@ -468,7 +470,7 @@ export function HomeClient({
               {/* Stats overview */}
               <div className="grid grid-cols-3 gap-6 pt-6 border-t border-border/60">
                 <div>
-                  <div className="text-3xl md:text-4xl font-extrabold text-foreground">{projects.length}</div>
+                  <div className="text-3xl md:text-4xl font-extrabold text-foreground">{totalProjectsCount ?? projects.length}</div>
                   <div className="text-xs text-muted-foreground mt-1">Projects Built</div>
                 </div>
                 <div>
