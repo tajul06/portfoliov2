@@ -100,7 +100,15 @@ export function HomeClient({
   education = [],
   achievements = [],
 }: HomeClientProps) {
-  const firstName = profile?.name ? profile.name.split(" ")[0] : "Tajul";
+  // Use "Tajul" as the friendly calling name (handling "Md. Tajul Islam")
+  const displayName = (() => {
+    if (!profile?.name) return "Tajul";
+    const parts = profile.name.trim().split(/\s+/);
+    if (parts[0].toLowerCase().replace(".", "") === "md" && parts.length > 1) {
+      return parts[1]; // "Tajul"
+    }
+    return parts[0] || "Tajul";
+  })();
 
   return (
     <div className="relative overflow-hidden">
@@ -126,7 +134,7 @@ export function HomeClient({
               {/* Friendly greeting line */}
               <motion.div variants={heroItemVariants}>
                 <span className="text-xl sm:text-2xl font-medium text-muted-foreground block">
-                  Hi , I&apos;m {firstName},
+                  Hi , I&apos;m {displayName},
                 </span>
               </motion.div>
 
@@ -217,7 +225,7 @@ export function HomeClient({
                       <div className="w-48 h-48 rounded-full bg-accent/20 blur-2xl absolute" />
                       <div className="relative w-44 h-44 rounded-full border-2 border-accent/40 bg-secondary/80 flex items-center justify-center">
                         <span className="text-5xl font-black text-foreground">
-                          {firstName[0]}
+                          {displayName[0]}
                         </span>
                       </div>
                     </div>
