@@ -66,7 +66,11 @@ export default async function ArticlePage({
   );
 }
 
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
-  const articles = await prisma.article.findMany({ where: { published: true }, select: { slug: true } });
+  const articles = await prisma.article
+    .findMany({ where: { published: true }, select: { slug: true } })
+    .catch(() => []);
   return articles.map((a) => ({ slug: a.slug }));
 }
