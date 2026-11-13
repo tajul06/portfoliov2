@@ -1,8 +1,29 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import AIChatAssistant from "@/components/ai-chat-assistant";
+import dynamic from "next/dynamic";
+import Script from "next/script";
+import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import "./globals.css";
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-heading",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-mono",
+  display: "swap",
+});
+
+// Lazy-load AI Chat Assistant and 3D Mascot off the critical path for instant initial page loads
+const AIChatAssistant = dynamic(() => import("@/components/ai-chat-assistant"), {
+  ssr: false,
+});
 
 export const metadata: Metadata = {
   title: "Md Tajul Islam | Portfolio",
@@ -15,15 +36,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${plusJakartaSans.variable} ${jetbrainsMono.variable}`}
+    >
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
-          rel="stylesheet"
-        />
-        <script src="/mascots/exode-mascot.js" defer></script>
+        <Script src="/mascots/exode-mascot.js" strategy="lazyOnload" />
       </head>
       <body className="font-body antialiased selection:bg-accent selection:text-accent-foreground">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>

@@ -61,9 +61,9 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        heading: ["'Plus Jakarta Sans'", "'DM Sans'", "system-ui", "sans-serif"],
-        body: ["'Plus Jakarta Sans'", "'DM Sans'", "system-ui", "sans-serif"],
-        mono: ["'JetBrains Mono'", "monospace"],
+        heading: ["var(--font-heading)", "'Plus Jakarta Sans'", "'DM Sans'", "system-ui", "sans-serif"],
+        body: ["var(--font-heading)", "'Plus Jakarta Sans'", "'DM Sans'", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "'JetBrains Mono'", "monospace"],
       },
     },
   },

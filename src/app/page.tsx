@@ -9,53 +9,55 @@ import {
   DEFAULT_EDUCATION,
 } from "@/lib/constants";
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 export default async function Home() {
-  const profile = await prisma.profile.findFirst().catch(() => null);
-
-  // 1. Featured projects shown directly on the landing page (first 4)
-  const projects = await prisma.project
-    .findMany({
-      where: { visible: true },
-      orderBy: { sortOrder: "asc" },
-      take: 4,
-    })
-    .catch(() => []);
-
-  // 2. Total count of all visible projects built
-  const totalProjectsCount = await prisma.project
-    .count({
-      where: { visible: true },
-    })
-    .catch(() => projects.length);
-
-  // 3. Extract tech stack from all projects
-  const allProjectsTags = await prisma.project
-    .findMany({
-      where: { visible: true },
-      select: { tags: true },
-    })
-    .catch(() => []);
-
-  const skills = await prisma.skill
-    .findMany({
-      orderBy: { sortOrder: "asc" },
-    })
-    .catch(() => []);
-
-  const experiences = await prisma.experience
-    .findMany({
-      where: { visible: true },
-      orderBy: { sortOrder: "asc" },
-    })
-    .catch(() => []);
-
-  const education = await prisma.education
-    .findMany({
-      orderBy: { sortOrder: "asc" },
-    })
-    .catch(() => []);
+  // Fetch all home page data concurrently in a single parallel round-trip
+  const [
+    profile,
+    projects,
+    totalProjectsCount,
+    allProjectsTags,
+    skills,
+    experiences,
+    education,
+  ] = await Promise.all([
+    prisma.profile.findFirst().catch(() => null),
+    prisma.project
+      .findMany({
+        where: { visible: true },
+        orderBy: { sortOrder: "asc" },
+        take: 4,
+      })
+      .catch(() => []),
+    prisma.project
+      .count({
+        where: { visible: true },
+      })
+      .catch(() => 0),
+    prisma.project
+      .findMany({
+        where: { visible: true },
+        select: { tags: true },
+      })
+      .catch(() => []),
+    prisma.skill
+      .findMany({
+        orderBy: { sortOrder: "asc" },
+      })
+      .catch(() => []),
+    prisma.experience
+      .findMany({
+        where: { visible: true },
+        orderBy: { sortOrder: "asc" },
+      })
+      .catch(() => []),
+    prisma.education
+      .findMany({
+        orderBy: { sortOrder: "asc" },
+      })
+      .catch(() => []),
+  ]);
 
   const techStack = Array.from(
     new Set([
