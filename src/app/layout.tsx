@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import AIChatAssistant from "@/components/ai-chat-assistant";
 import { ThemeProvider } from "@/components/theme-provider";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "Md Tajul Islam | Portfolio",
@@ -29,6 +30,7 @@ export default function RootLayout({
           {children}
           <AIChatAssistant />
         </ThemeProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
